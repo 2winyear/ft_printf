@@ -2,20 +2,26 @@
 #include <unistd.h>
 #include "ft_printf.h"
 
+
+//-기호 출력하는 부분,
 int main()
 {
-	unsigned int u;
-	u = 0;
+	int d;
+	d = -135;
 
-	ft_printf("-->|%0*.*u|<--\n", -4, -4, u);
-	printf("-->|%0*.*u|<--\n", -4, -4, u);
-	// ft_printf("-->|%0*u|<--\n", -4, u);
-	// printf("-->|%0*u|<--\n", -4, u);
-	// ft_printf("-->|%-u|<--\n", u);
-	// printf("-->|%-u|<--\n", u);
-	// ft_printf("-->|%0*u|<--\n", -4, u);
-	// printf("-->|%0*u|<--\n", -4, u);
-	ft_printf("-->|%0.*u|<--\n", -4, u);
-	printf("-->|%0.*u|<--\n", -4, u);
+	ft_printf("-->|%.*d|<--\n", -4, d);
+	printf("-->|%.*d|<--\n", -4, d);
+
+	ft_printf("-->|%.*d|<--\n", -5, d);
+	printf("-->|%.*d|<--\n", -5, d);
+
+	ft_printf("-->|%0*.*d|<--\n", 5, -4, d);
+	printf("-->|%0*.*d|<--\n", 5, -4, d);
+	ft_printf("-->|%07.*d|<--\n", -4, d);
+	printf("-->|%07.*d|<--\n", -4, d);
+	// ft_printf("-->|%0*d|<--\n", 4, d);
+	// printf("-->|%0*d|<--\n", 4, d);
+	// ft_printf("-->|%--3.d|<--\n", d);
+	// printf("-->|%--3.d|<--\n", d);
 	return (0);
 }
