@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:52:41 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/20 21:17:22 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/21 13:06:45 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ int		ft_precision(const char **format, va_list ap)
 		if (**format == '*')
 		{
 			precision = va_arg(ap, int);
+			if (precision < 0)
+			{
+				precision = 0;
+				g_flag.flag_precision = 0;
+			}
 			++(*format);
 		}
 		while (ft_isdigit(**format) == 1)
@@ -163,15 +168,24 @@ void	u_no_minus_flag(t_d_vars var)
 		padding_size = g_flag.min_width - var.num_len;
 	else
 		padding_size = g_flag.min_width - g_flag.precision;
+	if (g_flag.flag_precision == 1 && g_flag.precision == 0
+			&& *var.str_of_num == '0')
+	{
+		if (padding_size > -1)
+			padding_size++;
+		var.num_len = 0;
+	}
 	while (padding_size-- > 0)
-			ft_putchar(var.symbol_of_padding);
-	var.zero_remains = g_flag.precision - var.num_len;
+		ft_putchar(var.symbol_of_padding);
+	var.zero_remains = g_flag.precision - var.num_len;//다시보기
 	while (var.zero_remains-- > 0)
 		ft_putchar('0');
 	while ((var.num_len)--)
+	{
 		ft_putchar(*(var.str_of_num)++);
+	}
 }
-
+//precision이 음수면, precison을 안 넣는것과 똑같다.
 void	u_minus_flag(t_d_vars var)
 {
 	int padding_size;
@@ -183,13 +197,17 @@ void	u_minus_flag(t_d_vars var)
 	var.zero_remains = g_flag.precision - var.num_len;
 	while (var.zero_remains-- > 0)
 		ft_putchar('0');
-	while ((var.num_len)--)
+	while ((var.num_len)-- > 0)
 	{
-		//오늘의 숙제: 여기 조건 설정. -> u고쳐보기.
-		if (g_flag.flag_precision == 1 && g_flag.precision == 0 && )
-			if (*var.str_of_num == 0)
-				*var.str_of_num = ' ';
-		ft_putchar(*(var.str_of_num)++);
+		if (g_flag.flag_precision == 1 && g_flag.precision == 0
+			&& *var.str_of_num == '0')
+		{
+			if (padding_size > -1)
+				padding_size++;
+			var.num_len = 0;
+		}
+		else
+			ft_putchar(*(var.str_of_num)++);
 	}
 	while (padding_size-- > 0)
 		ft_putchar(var.symbol_of_padding);
@@ -201,11 +219,24 @@ void  ft_u_type(va_list ap)
 
 	var.zero_remains = 0;
 	var.u_num = va_arg(ap, unsigned int);
-	if (g_flag.flag_zero)
+	var.str_of_num = ft_itoa(var.u_num);
+	// flag_minus와 flag_zero가 같이 있을 때 무시
+	// precision이랑 flag_zero가 같이 있을 때 무시
+	if (g_flag.flag_zero == 1)
+	{
 		var.symbol_of_padding = '0';
+		if (g_flag.flag_minus == 1)
+			var.symbol_of_padding =' ';
+		if (g_flag.flag_precision == 1 || g_flag.precision < 0)
+			var.symbol_of_padding =' ';
+	}
 	else
 		var.symbol_of_padding = ' ';
-	var.str_of_num = ft_itoa(var.u_num);
+	if (g_flag.flag_precision == 1 && g_flag.precision == 0
+			&& *var.str_of_num == '0')
+	{
+		var.symbol_of_padding = ' ';
+	}
 	if (!var.str_of_num)
 		return ;
 	var.num_len = ft_strlen(var.str_of_num);

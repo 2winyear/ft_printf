@@ -7,9 +7,15 @@ int main()
 	unsigned int u;
 	u = 0;
 
-	ft_printf("-->|%-4.*u|<--\n", 0, u);
-	printf("-->|%-4.*u|<--\n", 0, u);
-	ft_printf("-->|%-4.*u|<--\n", 0, u);
-	printf("-->|%-4.*u|<--\n", 0, u);
+	ft_printf("-->|%0*.*u|<--\n", -4, -4, u);
+	printf("-->|%0*.*u|<--\n", -4, -4, u);
+	// ft_printf("-->|%0*u|<--\n", -4, u);
+	// printf("-->|%0*u|<--\n", -4, u);
+	// ft_printf("-->|%-u|<--\n", u);
+	// printf("-->|%-u|<--\n", u);
+	// ft_printf("-->|%0*u|<--\n", -4, u);
+	// printf("-->|%0*u|<--\n", -4, u);
+	ft_printf("-->|%0.*u|<--\n", -4, u);
+	printf("-->|%0.*u|<--\n", -4, u);
 	return (0);
 }
