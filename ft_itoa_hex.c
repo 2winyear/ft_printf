@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 22:09:45 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/21 22:56:29 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/21 23:13:52 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char		*ft_itoa_hex(long long num, char type)
 	int			len;
 	char		*str;
 
-	len = nbr_len(n);
+	len = nbr_len(num);
 	if (!(str = (char*)malloc(sizeof(char) * (1 + len))))
 		return (NULL);
 	if (num < 0)

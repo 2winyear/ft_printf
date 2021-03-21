@@ -6,7 +6,7 @@
 #    By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/08 21:21:01 by seungyel          #+#    #+#              #
-#    Updated: 2021/03/21 23:02:55 by seungyel         ###   ########.fr        #
+#    Updated: 2021/03/21 23:17:06 by seungyel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ SRCS = ft_printf.c \
 			ft_itoa_hex.c \
 			ft_isdigit.c \
 			ft_c_s_percent_type.c \
-			ft_p_u_type.c \
+			ft_p_type.c \
 			ft_d_type.c \
-			ft_p_u_type.c
+			ft_u_x_type.c
 
 OBJS = $(SRCS:.c=.o)
 
