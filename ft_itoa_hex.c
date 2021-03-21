@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 22:09:45 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/20 04:03:48 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/21 22:56:29 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ static int	nbr_len(long long n)
 	return (count);
 }
 
-char		*ft_itoa_hex(long long n, char type)
+char		*ft_itoa_hex(long long num, char type)
 {
 	int			len;
 	char		*str;
-	long long	num;
 
-	num = n;
 	len = nbr_len(n);
 	if (!(str = (char*)malloc(sizeof(char) * (1 + len))))
 		return (NULL);

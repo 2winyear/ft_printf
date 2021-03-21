@@ -6,10 +6,9 @@
 #    By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/08 21:21:01 by seungyel          #+#    #+#              #
-#    Updated: 2021/03/20 19:19:56 by seungyel         ###   ########.fr        #
+#    Updated: 2021/03/21 23:02:55 by seungyel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = libftprintf.a
 TEST = ft_printf.out
@@ -20,7 +19,10 @@ SRCS = ft_printf.c \
 			ft_itoa.c \
 			ft_itoa_hex.c \
 			ft_isdigit.c \
-			ft_c_s_percent_type.c
+			ft_c_s_percent_type.c \
+			ft_p_u_type.c \
+			ft_d_type.c \
+			ft_p_u_type.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -40,7 +42,3 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
-
-test:
-	@gcc -Wall -Werror -Wextra *.c
-	@./a.out

@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/12 21:09:11 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/12 21:09:45 by seungyel         ###   ########.fr       */
+/*   Created: 2021/03/21 22:38:26 by seungyel          #+#    #+#             */
+/*   Updated: 2021/03/21 22:40:14 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void    ft_putchar(char c)
+void	ft_putchar(char c)
 {
-    write (1, &c, 1);
-    g_flag.char_count++;
+	write(1, &c, 1);
+	g_flag.char_count++;
 }

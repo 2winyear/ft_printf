@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:00:43 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/21 22:20:10 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/21 22:55:48 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef	struct		s_flag
 	int				min_width;
 	int				char_count;
 }					t_flag;
-
 typedef struct		s_d_vars
 {
 	int				zero_remains;
@@ -39,15 +38,16 @@ typedef struct		s_d_vars
 	char			*str_of_num;
 }					t_d_vars;
 t_flag	g_flag;
-void	ft_c_type(va_list ap);
-void	ft_s_type_1(va_list ap);
-void	ft_percent_type(void);
-void	ft_minus_zero_check(const char **format);
-void	ft_putchar(char c);
-int		ft_printf(const char *format, ...);
-int		ft_isdigit(int c);
-char	*ft_itoa_hex(long long n, char type);
-char	*ft_itoa(long long n);
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(char *str, int c);
+void				ft_c_type(va_list ap);
+void				ft_s_type_1(va_list ap);
+void				ft_percent_type(void);
+void				ft_minus_zero_check(const char **format);
+void				ft_putchar(char c);
+void				ft_type_check(const char **format, va_list ap);
+int					ft_printf(const char *format, ...);
+int					ft_isdigit(int c);
+char				*ft_itoa_hex(long long n, char type);
+char				*ft_itoa(long long n);
+size_t				ft_strlen(const char *str);
+char				*ft_strchr(char *str, int c);
 #endif
