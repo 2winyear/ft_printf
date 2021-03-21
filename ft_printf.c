@@ -6,26 +6,11 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:52:41 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/21 17:54:31 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/21 22:22:34 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
-
-typedef struct s_d_vars t_d_vars;
-
-struct s_d_vars
-{
-	int zero_remains;
-	int num_len;
-	long long num;
-	unsigned int u_num;
-	unsigned int x_num;
-	int is_negative;
-	char symbol_of_padding;
-	char *str_of_num;
-};
 
 void	ft_minus_zero_check(const char **format)
 {
@@ -101,10 +86,9 @@ void	d_no_minus_flag(t_d_vars var)
 		padding_size = g_flag.min_width - var.num_len - var.is_negative;
 	else
 		padding_size = g_flag.min_width - g_flag.precision - var.is_negative;
-	if (g_flag.flag_precision == 1 && g_flag.precision == 0
-			&& var.num == 0)
+	if (g_flag.flag_precision == 1 && g_flag.precision == 0 && var.num == 0)
 	{
-		if (padding_size > - 1) //이부분 이상.
+		if (padding_size > -1)
 			padding_size++;
 		var.num_len = 0;
 	}
@@ -152,20 +136,15 @@ void	d_minus_flag(t_d_vars var)
 		ft_putchar(var.symbol_of_padding);
 }
 
-void  ft_d_type(va_list ap)
+void	ft_d_type(va_list ap, t_d_vars var)
 {
-	t_d_vars var;
-
-	var.zero_remains = 0;
-	var.is_negative = 0;
 	var.num = va_arg(ap, int);
 	if (g_flag.flag_zero == 1)
 	{
 		var.symbol_of_padding = '0';
-		if (g_flag.flag_minus == 1)
-			var.symbol_of_padding =' ';
-		if (g_flag.flag_precision == 1 || g_flag.precision < 0)
-			var.symbol_of_padding =' ';
+		if (g_flag.flag_minus == 1 || g_flag.flag_precision == 1
+			|| g_flag.precision < 0)
+			var.symbol_of_padding = ' ';
 	}
 	else
 		var.symbol_of_padding = ' ';
@@ -185,10 +164,9 @@ void  ft_d_type(va_list ap)
 	free(var.str_of_num);
 }
 
-// flag_minus가 있을 때(왼쪽정렬), num의 값이 0일때
 void	u_no_minus_flag(t_d_vars var)
 {
-	int padding_size;
+	int	padding_size;
 
 	if (g_flag.precision < var.num_len)
 		padding_size = g_flag.min_width - var.num_len;
@@ -209,6 +187,7 @@ void	u_no_minus_flag(t_d_vars var)
 	while ((var.num_len)--)
 		ft_putchar(*(var.str_of_num)++);
 }
+
 void	u_minus_flag(t_d_vars var)
 {
 	int padding_size;
@@ -222,8 +201,8 @@ void	u_minus_flag(t_d_vars var)
 		ft_putchar('0');
 	while ((var.num_len)-- > 0)
 	{
-		if (g_flag.flag_precision == 1 && g_flag.precision == 0
-			&& var.u_num == 0) //신의 한수
+		if (g_flag.flag_precision == 1
+		&& g_flag.precision == 0 && var.u_num == 0)
 		{
 			if (padding_size > -1)
 				padding_size++;
@@ -236,20 +215,17 @@ void	u_minus_flag(t_d_vars var)
 		ft_putchar(var.symbol_of_padding);
 }
 
-void  ft_u_type(va_list ap)
+void	ft_u_type(va_list ap, t_d_vars var)
 {
-	t_d_vars var;
-
 	var.zero_remains = 0;
 	var.u_num = va_arg(ap, unsigned int);
 	var.str_of_num = ft_itoa(var.u_num);
 	if (g_flag.flag_zero == 1)
 	{
 		var.symbol_of_padding = '0';
-		if (g_flag.flag_minus == 1)
-			var.symbol_of_padding =' ';
-		if (g_flag.flag_precision == 1 || g_flag.precision < 0)
-			var.symbol_of_padding =' ';
+		if (g_flag.flag_minus == 1 || g_flag.flag_precision == 1
+			|| g_flag.precision < 0)
+			var.symbol_of_padding = ' ';
 	}
 	else
 		var.symbol_of_padding = ' ';
@@ -268,43 +244,9 @@ void  ft_u_type(va_list ap)
 	free(var.str_of_num);
 }
 
-// void	x_no_minus_flag(t_d_vars var)
-// {
-// 	int padding_size;
-
-// 	if (g_flag.precision < var.num_len)
-// 		padding_size = g_flag.min_width - var.num_len;
-// 	else
-// 		padding_size = g_flag.min_width - g_flag.precision;
-// 	while (padding_size-- > 0)
-// 			ft_putchar(var.symbol_of_padding);
-// 	var.zero_remains = g_flag.precision - var.num_len;
-// 	while (var.zero_remains-- > 0)
-// 		ft_putchar('0');
-// 	while ((var.num_len)--)
-// 		ft_putchar(*(var.str_of_num)++);
-// }
-
-// void	x_minus_flag(t_d_vars var)
-// {
-// 	int padding_size;
-
-// 	if (g_flag.precision < var.num_len)
-// 		padding_size = g_flag.min_width - var.num_len;
-// 	else
-// 		padding_size = g_flag.min_width - g_flag.precision;
-// 	var.zero_remains = g_flag.precision - var.num_len;
-// 	while (var.zero_remains-- > 0)
-// 		ft_putchar('0');
-// 	while ((var.num_len)--)
-// 		ft_putchar(*(var.str_of_num)++);
-// 	while (padding_size-- > 0)
-// 		ft_putchar(var.symbol_of_padding);
-// }
-
-void  ft_x_type(va_list ap, char type)
+void	ft_x_type(va_list ap, char type)
 {
-	t_d_vars var;
+	t_d_vars	var;
 
 	var.zero_remains = 0;
 	var.u_num = va_arg(ap, unsigned int);
@@ -312,17 +254,14 @@ void  ft_x_type(va_list ap, char type)
 	{
 		var.symbol_of_padding = '0';
 		if (g_flag.flag_minus == 1)
-			var.symbol_of_padding =' ';
+			var.symbol_of_padding = ' ';
 		if (g_flag.flag_precision == 1 || g_flag.precision < 0)
-			var.symbol_of_padding =' ';
+			var.symbol_of_padding = ' ';
 	}
 	else
 		var.symbol_of_padding = ' ';
-	if (g_flag.flag_precision == 1 && g_flag.precision == 0
-			&& var.u_num == 0)
-	{
+	if (g_flag.flag_precision == 1 && g_flag.precision == 0 && var.u_num == 0)
 		var.symbol_of_padding = ' ';
-	}
 	var.str_of_num = ft_itoa_hex(var.u_num, type);
 	if (!var.str_of_num)
 		return ;
@@ -334,26 +273,37 @@ void  ft_x_type(va_list ap, char type)
 	free(var.str_of_num);
 }
 
-void	ft_p_type(va_list ap, int i, int j, int index)
+void	ft_p_type_2(int j, char *out)
 {
 	int			gap;
+
+	out[j + 2] = '\0';
+	gap = g_flag.min_width - j - 2;
+	j = 0;
+	while (g_flag.flag_minus != 1 && gap-- > 0)
+		ft_putchar(' ');
+	while (out[j])
+		ft_putchar(out[j++]);
+	while (g_flag.flag_minus == 1 && gap-- > 0)
+		ft_putchar(' ');
+}
+
+void	ft_p_type_1(va_list ap, int i, int j, int index)
+{
 	char		out[20];
 	char		out_reverse[13];
-	char		*numbers;
 	long long	num;
 
-	numbers = "0123456789abcdef";
 	num = (long long)va_arg(ap, void *);
 	while (num >= 16)
 	{
-		out_reverse[i++] = numbers[num % 16];
+		out_reverse[i++] = "0123456789abcdef"[num % 16];
 		num /= 16;
 	}
-	out_reverse[i] = numbers[num];
+	out_reverse[i] = "0123456789abcdef"[num];
 	index = i;
 	out[0] = '0';
 	out[1] = 'x';
-
 	if (g_flag.flag_precision == 1 && g_flag.precision == 0 && num == 0)
 		out[2] = '\0';
 	else
@@ -364,43 +314,29 @@ void	ft_p_type(va_list ap, int i, int j, int index)
 			j++;
 		}
 	}
-	out[j + 2] = '\0';
-	gap = g_flag.min_width - j - 2;
-	j = 0;
-	if (g_flag.flag_minus == 1)
-	{
-		while (out[j])
-			ft_putchar(out[j++]);
-		while (gap-- > 0)
-			ft_putchar(' ');
-	}
-	else
-	{
-		while (gap-- > 0)
-			ft_putchar(' ');
-		while (out[j])
-			ft_putchar(out[j++]);
-	}
+	ft_p_type_2(j, out);
 }
 
 void	ft_type_check(const char **format, va_list ap)
 {
-	if (**format == 'd')
-		ft_d_type(ap);
-	else if (**format == 'i')
-		ft_d_type(ap);
+	t_d_vars	var;
+
+	var.zero_remains = 0;
+	var.is_negative = 0;
+	if (**format == 'd' || **format == 'i')
+		ft_d_type(ap, var);
 	else if (**format == 'u')
-		ft_u_type(ap);
+		ft_u_type(ap, var);
 	else if (**format == 'x')
 		ft_x_type(ap, 'x');
 	else if (**format == 'X')
 		ft_x_type(ap, 'X');
 	else if (**format == 'p')
-		ft_p_type(ap, 0, 0, 0);
+		ft_p_type_1(ap, 0, 0, 0);
 	else if (**format == 'c')
 		ft_c_type(ap);
 	else if (**format == 's')
-		ft_s_type(ap);
+		ft_s_type_1(ap);
 	else if (**format == '%')
 		ft_percent_type();
 	++(*format);
