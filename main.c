@@ -6,22 +6,16 @@
 //-기호 출력하는 부분,
 int main()
 {
-	int d;
-	d = -135;
 
-	ft_printf("-->|%.*d|<--\n", -4, d);
-	printf("-->|%.*d|<--\n", -4, d);
+	int		a = -4;
+	int		b = 0;
+	int		e = 0;
+	printf(" --- Return : %d\n", ft_printf("%*.*x, %*.*X", a, b, e, a, b, e));
+	printf(" --- Return : %d\n", ft_printf("%0*.*x, %0*.*X", a, b, e, a, b, e));
+	printf(" --- Return : %d\n", ft_printf("%-*.*x, %-*.*X", a, b, e, a, b, e));
 
-	ft_printf("-->|%.*d|<--\n", -5, d);
-	printf("-->|%.*d|<--\n", -5, d);
-
-	ft_printf("-->|%0*.*d|<--\n", 5, -4, d);
-	printf("-->|%0*.*d|<--\n", 5, -4, d);
-	ft_printf("-->|%07.*d|<--\n", -4, d);
-	printf("-->|%07.*d|<--\n", -4, d);
-	// ft_printf("-->|%0*d|<--\n", 4, d);
-	// printf("-->|%0*d|<--\n", 4, d);
-	// ft_printf("-->|%--3.d|<--\n", d);
-	// printf("-->|%--3.d|<--\n", d);
+	printf(" --- Return : %d\n", printf("%*.*x, %*.*X", a, b, e, a, b, e));
+	printf(" --- Return : %d\n", printf("%0*.*x, %0*.*X", a, b, e, a, b, e));
+	printf(" --- Return : %d\n", printf("%-*.*x, %-*.*X", a, b, e, a, b, e));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:52:41 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/21 17:07:10 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/21 17:54:31 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	d_no_minus_flag(t_d_vars var)
 	else
 		padding_size = g_flag.min_width - g_flag.precision - var.is_negative;
 	if (g_flag.flag_precision == 1 && g_flag.precision == 0
-			&& *var.str_of_num == '0')
+			&& var.num == 0)
 	{
 		if (padding_size > - 1) //이부분 이상.
 			padding_size++;
@@ -139,7 +139,7 @@ void	d_minus_flag(t_d_vars var)
 	while ((var.num_len)--)
 	{
 		if (g_flag.flag_precision == 1 && g_flag.precision == 0
-			&& *var.str_of_num == '0')
+			&& var.num == 0)
 		{
 			if (padding_size > -1)
 				padding_size++;
@@ -195,7 +195,7 @@ void	u_no_minus_flag(t_d_vars var)
 	else
 		padding_size = g_flag.min_width - g_flag.precision;
 	if (g_flag.flag_precision == 1 && g_flag.precision == 0
-			&& *var.str_of_num == '0')
+			&& var.u_num == 0)
 	{
 		if (padding_size > -1)
 			padding_size++;
@@ -203,7 +203,7 @@ void	u_no_minus_flag(t_d_vars var)
 	}
 	while (padding_size-- > 0)
 		ft_putchar(var.symbol_of_padding);
-	var.zero_remains = g_flag.precision - var.num_len;//다시보기
+	var.zero_remains = g_flag.precision - var.num_len;
 	while (var.zero_remains-- > 0)
 		ft_putchar('0');
 	while ((var.num_len)--)
@@ -223,7 +223,7 @@ void	u_minus_flag(t_d_vars var)
 	while ((var.num_len)-- > 0)
 	{
 		if (g_flag.flag_precision == 1 && g_flag.precision == 0
-			&& *var.str_of_num == '0')
+			&& var.u_num == 0) //신의 한수
 		{
 			if (padding_size > -1)
 				padding_size++;
@@ -243,8 +243,6 @@ void  ft_u_type(va_list ap)
 	var.zero_remains = 0;
 	var.u_num = va_arg(ap, unsigned int);
 	var.str_of_num = ft_itoa(var.u_num);
-	// flag_minus와 flag_zero가 같이 있을 때 무시
-	// precision이랑 flag_zero가 같이 있을 때 무시
 	if (g_flag.flag_zero == 1)
 	{
 		var.symbol_of_padding = '0';
@@ -256,7 +254,7 @@ void  ft_u_type(va_list ap)
 	else
 		var.symbol_of_padding = ' ';
 	if (g_flag.flag_precision == 1 && g_flag.precision == 0
-			&& *var.str_of_num == '0')
+			&& var.u_num == 0)
 	{
 		var.symbol_of_padding = ' ';
 	}
@@ -270,51 +268,62 @@ void  ft_u_type(va_list ap)
 	free(var.str_of_num);
 }
 
-void	x_no_minus_flag(t_d_vars var)
-{
-	int padding_size;
+// void	x_no_minus_flag(t_d_vars var)
+// {
+// 	int padding_size;
 
-	if (g_flag.precision < var.num_len)
-		padding_size = g_flag.min_width - var.num_len;
-	else
-		padding_size = g_flag.min_width - g_flag.precision;
-	while (padding_size-- > 0)
-			ft_putchar(var.symbol_of_padding);
-	var.zero_remains = g_flag.precision - var.num_len;
-	while (var.zero_remains-- > 0)
-		ft_putchar('0');
-	while ((var.num_len)--)
-		ft_putchar(*(var.str_of_num)++);
-}
+// 	if (g_flag.precision < var.num_len)
+// 		padding_size = g_flag.min_width - var.num_len;
+// 	else
+// 		padding_size = g_flag.min_width - g_flag.precision;
+// 	while (padding_size-- > 0)
+// 			ft_putchar(var.symbol_of_padding);
+// 	var.zero_remains = g_flag.precision - var.num_len;
+// 	while (var.zero_remains-- > 0)
+// 		ft_putchar('0');
+// 	while ((var.num_len)--)
+// 		ft_putchar(*(var.str_of_num)++);
+// }
 
-void	x_minus_flag(t_d_vars var)
-{
-	int padding_size;
+// void	x_minus_flag(t_d_vars var)
+// {
+// 	int padding_size;
 
-	if (g_flag.precision < var.num_len)
-		padding_size = g_flag.min_width - var.num_len;
-	else
-		padding_size = g_flag.min_width - g_flag.precision;
-	var.zero_remains = g_flag.precision - var.num_len;
-	while (var.zero_remains-- > 0)
-		ft_putchar('0');
-	while ((var.num_len)--)
-		ft_putchar(*(var.str_of_num)++);
-	while (padding_size-- > 0)
-		ft_putchar(var.symbol_of_padding);
-}
+// 	if (g_flag.precision < var.num_len)
+// 		padding_size = g_flag.min_width - var.num_len;
+// 	else
+// 		padding_size = g_flag.min_width - g_flag.precision;
+// 	var.zero_remains = g_flag.precision - var.num_len;
+// 	while (var.zero_remains-- > 0)
+// 		ft_putchar('0');
+// 	while ((var.num_len)--)
+// 		ft_putchar(*(var.str_of_num)++);
+// 	while (padding_size-- > 0)
+// 		ft_putchar(var.symbol_of_padding);
+// }
 
 void  ft_x_type(va_list ap, char type)
 {
 	t_d_vars var;
 
 	var.zero_remains = 0;
-	var.x_num = va_arg(ap, int);
+	var.u_num = va_arg(ap, unsigned int);
 	if (g_flag.flag_zero)
+	{
 		var.symbol_of_padding = '0';
+		if (g_flag.flag_minus == 1)
+			var.symbol_of_padding =' ';
+		if (g_flag.flag_precision == 1 || g_flag.precision < 0)
+			var.symbol_of_padding =' ';
+	}
 	else
 		var.symbol_of_padding = ' ';
-	var.str_of_num = ft_itoa_hex(var.x_num, type);
+	if (g_flag.flag_precision == 1 && g_flag.precision == 0
+			&& var.u_num == 0)
+	{
+		var.symbol_of_padding = ' ';
+	}
+	var.str_of_num = ft_itoa_hex(var.u_num, type);
 	if (!var.str_of_num)
 		return ;
 	var.num_len = ft_strlen(var.str_of_num);
